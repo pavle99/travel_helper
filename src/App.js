@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CssBaseline, Grid } from "@material-ui/core";
 
 
@@ -10,6 +10,15 @@ const App = () => {
 
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
+
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState({});
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      setCoordinates({ lat: latitude, lng: longitude });
+    });
+  }, []);
 
   return (
     <>
@@ -28,8 +37,17 @@ const App = () => {
           item
           xs={12}
           md={8}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <Map/>
+          <Map
+            setCoordinates={setCoordinates}
+            setBounds={setBounds}
+            coordinates={coordinates}
+          />
         </Grid>
       </Grid>
     </>
