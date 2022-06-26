@@ -3,7 +3,9 @@ import { CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, Typo
 
 import useStyles from "./styles.js";
 
-const List = ({ type, setType, rating, setRating }) => {
+import LocationCard from "./LocationCard"
+
+const List = ({ type, setType, rating, setRating, places }) => {
   const styles = useStyles();
 
   return (
@@ -26,6 +28,15 @@ const List = ({ type, setType, rating, setRating }) => {
           <MenuItem value={4.5}>Above 4.5</MenuItem>
         </Select>
       </FormControl>
+      <Grid container spacing={3} className={styles.list}>
+        {places?.map((place, i) => (
+          <Grid item key={i} xs={12}>
+            <LocationCard
+              place={place}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

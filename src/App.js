@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { CssBaseline, Grid } from "@material-ui/core";
 
-
 import Header from "./components/Header";
 import List from "./components/List";
 import Map from "./components/Map";
 
+import { getLocationData } from "./api/apiServices";
+
+
 const App = () => {
+  const [places, setPlaces] = useState([]);
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
@@ -20,6 +24,23 @@ const App = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const filteredPlaces = places.filter((place) => place.rating > rating);
+
+    setFilteredPlaces(filteredPlaces);
+  }, [rating]);
+
+  useEffect(() => {
+    if (bounds.sw && bounds.ne) {
+
+      getLocationData(type, bounds.sw, bounds.ne)
+        .then((data) => {
+          setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
+          setFilteredPlaces([]);
+        });
+    }
+  }, [type, bounds]);
+
   return (
     <>
       <CssBaseline/>
@@ -27,6 +48,7 @@ const App = () => {
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
+            places={filteredPlaces.length ? filteredPlaces : places}
             type={type}
             setType={setType}
             rating={rating}
@@ -47,6 +69,7 @@ const App = () => {
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
+            places={filteredPlaces.length ? filteredPlaces : places}
           />
         </Grid>
       </Grid>
