@@ -18,7 +18,9 @@ const App = () => {
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
 
-  const [weatherData, setWeatherData] = useState([])
+  const [weatherData, setWeatherData] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -34,14 +36,16 @@ const App = () => {
 
   useEffect(() => {
     if (bounds.sw && bounds.ne) {
+      setIsLoading(true);
 
       getWeatherData(coordinates.lat, coordinates.lng)
-        .then((data) => setWeatherData(data))
+        .then((data) => setWeatherData(data));
 
       getLocationData(type, bounds.sw, bounds.ne)
         .then((data) => {
           setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
           setFilteredPlaces([]);
+          setIsLoading(false);
         });
     }
   }, [type, bounds]);
@@ -49,7 +53,7 @@ const App = () => {
   return (
     <>
       <CssBaseline/>
-      <Header />
+      <Header/>
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
@@ -58,6 +62,7 @@ const App = () => {
             setType={setType}
             rating={rating}
             setRating={setRating}
+            isLoading={isLoading}
           />
         </Grid>
         <Grid
