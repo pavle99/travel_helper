@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import List from "./components/List";
 import Map from "./components/Map";
 
-import { getLocationData } from "./api/apiServices";
+import { getLocationData, getWeatherData } from "./api/apiServices";
 
 
 const App = () => {
@@ -17,6 +17,8 @@ const App = () => {
 
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
+
+  const [weatherData, setWeatherData] = useState([])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -32,6 +34,9 @@ const App = () => {
 
   useEffect(() => {
     if (bounds.sw && bounds.ne) {
+
+      getWeatherData(coordinates.lat, coordinates.lng)
+        .then((data) => setWeatherData(data))
 
       getLocationData(type, bounds.sw, bounds.ne)
         .then((data) => {
@@ -70,6 +75,7 @@ const App = () => {
             setBounds={setBounds}
             coordinates={coordinates}
             places={filteredPlaces.length ? filteredPlaces : places}
+            weatherData={weatherData}
           />
         </Grid>
       </Grid>

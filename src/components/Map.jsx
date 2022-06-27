@@ -5,7 +5,7 @@ import useStyles from "./styles.js";
 import { Rating } from "@material-ui/lab";
 import { Paper, Typography } from "@material-ui/core";
 
-const Map = ({ setCoordinates, setBounds, coordinates, places }) => {
+const Map = ({ setCoordinates, setBounds, coordinates, places, weatherData }) => {
   const styles = useStyles();
 
   return (
@@ -39,6 +39,11 @@ const Map = ({ setCoordinates, setBounds, coordinates, places }) => {
               />
               <Rating size="small" value={Number(place.rating)} readOnly/>
             </Paper>
+          </div>
+        ))}
+        {weatherData?.list?.map((data, i) => (
+          <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
+            <img height={100} src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`} alt="Weather"/>
           </div>
         ))}
       </GoogleMapReact>
