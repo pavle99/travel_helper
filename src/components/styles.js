@@ -105,4 +105,4 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
   },
-}));
+}), { index: 1 });
