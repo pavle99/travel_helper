@@ -5,7 +5,7 @@ import useStyles from "./styles.js";
 import { Rating } from "@material-ui/lab";
 import { Paper, Typography } from "@material-ui/core";
 
-const Map = ({ setCoordinates, setBounds, coordinates, places, weatherData }) => {
+const Map = ({ setCoordinates, setBounds, coordinates, places, weatherData, setChildClicked }) => {
   const styles = useStyles();
 
   return (
@@ -21,6 +21,7 @@ const Map = ({ setCoordinates, setBounds, coordinates, places, weatherData }) =>
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
         }}
+        onChildClick={(child) => setChildClicked(child)}
       >
         {places?.map((place, i) => (
           <div className={styles.markerContainer}

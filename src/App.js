@@ -22,6 +22,8 @@ const App = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [childClicked, setChildClicked] = useState(null);
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude });
@@ -63,6 +65,7 @@ const App = () => {
             rating={rating}
             setRating={setRating}
             isLoading={isLoading}
+            childClicked={childClicked}
           />
         </Grid>
         <Grid
@@ -81,6 +84,7 @@ const App = () => {
             coordinates={coordinates}
             places={filteredPlaces.length ? filteredPlaces : places}
             weatherData={weatherData}
+            setChildClicked={setChildClicked}
           />
         </Grid>
       </Grid>

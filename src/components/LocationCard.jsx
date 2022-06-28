@@ -7,8 +7,13 @@ import PhoneIcon from "@material-ui/icons/Phone";
 
 import useStyles from "./styles";
 
-const LocationCard = ({place}) => {
+const LocationCard = ({place, selected, refProp}) => {
   const styles = useStyles();
+
+  if (selected) {
+    refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    refProp = null;
+  }
 
   return (
     <Card elevation={6}>
