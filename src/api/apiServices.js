@@ -17,7 +17,6 @@ export const getLocationData = async (type, sw, ne) => {
 
     return data;
   } catch (error) {
-    console.log(process.env.REACT_APP_RAPID_API_KEY)
     console.log(error);
   }
 };
