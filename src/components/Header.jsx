@@ -5,7 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import useStyles from "./styles.js";
 
-const Header = ({setCoordinates}) => {
+const Header = ({ setCoordinates }) => {
   const styles = useStyles();
 
   const [autocomplete, setAutoComplete] = useState(null);
@@ -23,7 +23,7 @@ const Header = ({setCoordinates}) => {
     <AppBar position="static">
       <Toolbar className={styles.toolbar}>
         <Typography variant="h5" className={styles.title}>
-          Travel Advisor
+          Travel Helper
         </Typography>
         <Box display="flex">
           <Typography variant="h6" className={styles.title}>
@@ -32,7 +32,7 @@ const Header = ({setCoordinates}) => {
           <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
             <div className={styles.search}>
               <div className={styles.searchIcon}>
-                <SearchIcon/>
+                <SearchIcon />
               </div>
               <InputBase
                 placeholder="Search…"

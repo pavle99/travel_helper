@@ -24,9 +24,11 @@ const App = () => {
   const [childClicked, setChildClicked] = useState(null);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-      setCoordinates({ lat: latitude, lng: longitude });
-    });
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setCoordinates({ lat: latitude, lng: longitude });
+      }
+    );
   }, []);
 
   useEffect(() => {
@@ -39,22 +41,22 @@ const App = () => {
     if (bounds.sw && bounds.ne) {
       setIsLoading(true);
 
-      getWeatherData(coordinates.lat, coordinates.lng)
-        .then((data) => setWeatherData(data));
+      getWeatherData(coordinates.lat, coordinates.lng).then((data) =>
+        setWeatherData(data)
+      );
 
-      getLocationData(type, bounds.sw, bounds.ne)
-        .then((data) => {
-          setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
-          setFilteredPlaces([]);
-          setIsLoading(false);
-        });
+      getLocationData(type, bounds.sw, bounds.ne).then((data) => {
+        setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
+        setFilteredPlaces([]);
+        setIsLoading(false);
+      });
     }
   }, [type, bounds]);
 
   return (
     <>
-      <CssBaseline/>
-      <Header setCoordinates={setCoordinates}/>
+      <CssBaseline />
+      <Header setCoordinates={setCoordinates} />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
