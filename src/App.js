@@ -7,7 +7,6 @@ import Map from "./components/Map";
 
 import { getLocationData, getWeatherData } from "./api/apiServices";
 
-
 const App = () => {
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -55,7 +54,7 @@ const App = () => {
   return (
     <>
       <CssBaseline/>
-      <Header/>
+      <Header setCoordinates={setCoordinates}/>
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
